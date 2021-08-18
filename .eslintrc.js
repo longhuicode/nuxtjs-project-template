@@ -11,5 +11,23 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    'brace-style': ['error', 'stroustrup'],
+    'vue/attribute-hyphenation': ['error', 'never', {
+      ignore: ['custom-prop']
+    }],
+    'import/named': ['off'],
+    camelcase: ['off'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^I[A-Z]',
+          match: true
+        }
+      }
+    ]
+  }
 }

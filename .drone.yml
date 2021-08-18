@@ -1,0 +1,77 @@
+pipeline:
+  # restore node_modules from cache
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache/drone/bestdas.com:/cache
+
+  # build
+  build:
+    image: node:lts
+    commands:
+      - npm install
+      - npm run build
+
+  # write node_modules back to cache
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache/drone/bestdas.com:/cache
+
+  # deploy production env
+  deploy_production:
+    image: drillster/drone-rsync
+    hosts: [ $HOST_IP ]
+    user: root
+    secrets: [ rsync_key, host_ip ]
+    source: ./
+    target: /data/code/bestdas.com
+    script:
+      - cd /data/code/bestdas.com
+      - npm run reload-production
+    when:
+      branch: [main]
+
+  # deploy_test_env
+  deploy_test:
+    image: drillster/drone-rsync
+    hosts: [$HOST_IP]
+    user: root
+    secrets: [ rsync_key, host_ip ]
+    source: ./
+    target: /data/code/test1.bestdas.com
+    script:
+      - cd /data/code/test1.bestdas.com
+      - npm run reload-test1
+    when:
+      branch: [ feat/*, fix/* ]
+
+  wechat_success:
+    image: lizheming/drone-wechat
+    secrets: [plugin_corpid, plugin_corp_secret, plugin_agent_id]
+    title: '${DRONE_REPO_NAME} ${DRONE_COMMIT_BRANCH} 构建成功✅'
+    message: "分支: ${DRONE_COMMIT_BRANCH} 序列: ${DRONE_BUILD_NUMBER}. 提交人: ${DRONE_COMMIT_AUTHOR}. 查看详情: ${DRONE_BUILD_LINK} "
+    to_user: 'jeff'
+    to_party: 2 # 前端组
+    msg_url: ${DRONE_BUILD_LINK}
+    btn_txt: 详情
+    when:
+      status: [ success ]
+
+  wechat_failed:
+    image: lizheming/drone-wechat
+    secrets: [plugin_corpid, plugin_corp_secret, plugin_agent_id]
+    title: '${DRONE_REPO_NAME} ${DRONE_COMMIT_BRANCH} 构建失败‼️'
+    message: "分支: ${DRONE_COMMIT_BRANCH} 序列: ${DRONE_BUILD_NUMBER}. 提交人: ${DRONE_COMMIT_AUTHOR}. 查看详情: ${DRONE_BUILD_LINK} "
+    to_user: 'jeff'
+    to_party: 2 #前端组
+    msg_url: ${DRONE_BUILD_LINK}
+    btn_txt: 失败详情
+    when:
+      status: [ failure ]
