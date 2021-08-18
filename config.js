@@ -9,7 +9,7 @@ module.exports = {
   description: packageJson.description,
   host: '0.0.0.0',
   hostname,
-  port: process.env.PORT || 10201,
+  port: process.env.PORT || 10200,
   domain: isProd ? `https://${hostname}/` : `https://${hostname}/`,
   servicesApi: isProd ? 'https://auction-api.bestdas.com/v1' : 'https://auction-test-api.bestdas.com/v1',
   googleAnalyticsId: 'G-XG4LQ1N702',

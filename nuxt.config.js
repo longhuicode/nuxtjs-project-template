@@ -19,6 +19,7 @@ export default {
       lang: 'en'
     },
     meta: [
+      { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { name: 'format-detection', content: 'telephone=no' },
@@ -106,8 +107,15 @@ export default {
     prefetchLinks: false
   },
 
+  render: {
+    // prevent preload, improve first time performance
+    resourceHints: false
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    // For debug purpose
+    'html.minify': !config.isProd,
     extractCSS: true
   }
 }

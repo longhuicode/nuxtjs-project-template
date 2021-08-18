@@ -6,11 +6,11 @@
   "scripts": {
     "predev": "npm run i18n",
     "dev": "nuxt",
+    "dev-test1": "nuxt --port 10201",
     "prebuild": "npm run i18n",
     "build": "nuxt build",
     "prestart": "npm run build",
     "start": "nuxt start",
-    "test1": "nuxt --port 10201",
     "analyze": "nuxt build --analyze",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
@@ -31,7 +31,7 @@
     "qrcode.vue": "^1.7.0",
     "vee-validate": "^3.4.11",
     "vue-i18n": "^8.25.0",
-    "vuex-persistedstate": "^2.7.1"
+    "vuex-persistedstate": "^3.2.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
