@@ -2,7 +2,7 @@ const config = require('./config')
 
 function generateApp (env, port) {
   const isProd = env === 'production'
-  const appName = isProd ? config.appNmae : `${config.appNmae}-${env}`
+  const appName = isProd ? config.appNmae : `${env}.${config.appNmae}`
 
   return {
     name: appName,
@@ -17,7 +17,7 @@ function generateApp (env, port) {
     kill_timeout: 10 * 1000, // ms
     listen_timeout: 10 * 1000, // ms
     env: {
-      NODE_ENV: isProd ? 'production' : 'development',
+      NODE_ENV: 'production',
       PORT: port
     }
   }

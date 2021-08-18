@@ -18,7 +18,7 @@
     "test": "jest",
     "i18n": "i18n-abc scan && i18n-abc transform",
     "reload-production": "pm2 reload ecosystem.config.js --only bestdas.com",
-    "reload-test1": "pm2 reload ecosystem.config.js --only bestdas.com-test1"
+    "reload-test1": "pm2 reload ecosystem.config.js --only test1.bestdas.com"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
