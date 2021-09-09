@@ -9,6 +9,7 @@ declare module 'vue/types/vue' {
     $services: Services
     $alert: (options: IAlertOptions) => void
     $toast: (message: string, duration?: number) => void
+    $gtag: (type: string, action: string, option: { [key: string]: any }) => void
   }
 }
 
