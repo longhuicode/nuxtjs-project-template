@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { Services } from '~/services'
 import { IAlertOptions } from '~/plugins/alert'
 
@@ -9,4 +10,8 @@ declare module 'vue/types/vue' {
     $alert: (options: IAlertOptions) => void
     $toast: (message: string, duration?: number) => void
   }
+}
+
+declare module '*.vue' {
+  export default Vue
 }

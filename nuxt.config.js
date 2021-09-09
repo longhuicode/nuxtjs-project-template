@@ -116,6 +116,11 @@ export default {
   build: {
     // For debug purpose
     'html.minify': !config.isProd,
-    extractCSS: true
+    extractCSS: true,
+    babel: {
+      presets () {
+        return []
+      }
+    }
   }
 }
