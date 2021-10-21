@@ -1,5 +1,5 @@
 import Axios, { AxiosInstance } from 'axios'
-import { servicesApi } from '../../config'
+import config from '~/constant/config'
 import { onFulfilled, onRejected } from './interceptors'
 
 export class BasicService {
@@ -9,7 +9,7 @@ export class BasicService {
 
   constructor () {
     this.axios = Axios.create({
-      baseURL: servicesApi,
+      baseURL: config.servicesApi,
       withCredentials: true
     })
     this.axios.interceptors.response.use(onFulfilled, onRejected)
